@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments.html :: head"></head>
+<body>
+
+<nav th:insert="fragments.html :: navbar">
+</nav>
+<div class="bg " style="margin-top: 80px;">
+    <div class="bg-product mt-2">
+        <div class="container product">
+            <div class="row">
+                <div id="sliderproduct" class="carousel slide " data-ride="carousel" data-interval="10000">
+                    <ol class="carousel-indicators">
+                        <li data-target="#sliderproduct" data-slide-to="0" class="active"></li>
+                        <li data-target="#sliderproduct" data-slide-to="1"></li>
+                        <li data-target="#sliderproduct" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox" data-interval="10000000">
+                        <div class="carousel-item active">
+                            <div class="container text-center">
+                                <div class="row">
+                                    <div class="col-sm-6 image">
+                                        <div class="item">
+                                            <h1>Today Deal</h1>
+                                            <img class="img-fluid" src="https://tmbidigitalassetsazure.blob.core.windows.net/secure/RMS/attachments/37/1200x1200/Sausage-Sliders-with-Cran-Apple-Slaw_exps48783_SD2235819D06_24_2bC_RMS.jpg" alt="">
+                                        </div><!--enditem-->
+                                    </div><!--endcol-->
+                                    <div class="col-sm-6">
+                                        <div class="top d-flex justify-content-center">
+                                            <a href=""><b>2</b> <br>days</a>
+                                            <a href=""><b>20</b> <br> hours</a>
+                                            <a href=""><b>15</b> <br>min</a>
+                                            <a href=""><b>2</b> <br> sec</a>
+                                        </div><!--endtop-->
+                                        <div class="details">
+                                            <h2 class="cr3">Chicken Burger</h2>
+                                            <p class="cr4">Beef, tommato, green salad,pita,<br> ketchup, maionese, ….</p>
+                                            <div class="rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div><!--endrating-->
+                                            <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                            <a href="" class="btn btn-food">add to cart</a>
+                                        </div><!--enddetails-->
+                                    </div><!--endcol-->
+                                </div><!--endrow-->
+                            </div><!--endcontainer-->
+                        </div><!--endcarousel-item-->
+                        <div class="carousel-item">
+                            <div class="container text-center">
+                                <div class="row">
+                                    <div class="col-sm-6 image">
+                                        <div class="item">
+                                            <h1>Today Deal</h1>
+                                            <img class="img-fluid" src="https://tmbidigitalassetsazure.blob.core.windows.net/secure/RMS/attachments/37/1200x1200/Sausage-Sliders-with-Cran-Apple-Slaw_exps48783_SD2235819D06_24_2bC_RMS.jpg" alt="">
+                                        </div><!--enditem-->
+                                    </div><!--endcol-->
+                                    <div class="col-sm-6">
+                                        <div class="top d-flex justify-content-center">
+                                            <a href=""><b>2</b> <br>days</a>
+                                            <a href=""><b>20</b> <br> hours</a>
+                                            <a href=""><b>15</b> <br>min</a>
+                                            <a href=""><b>2</b> <br> sec</a>
+                                        </div><!--endtop-->
+                                        <div class="details">
+                                            <h2 class="cr3">Chicken Burger</h2>
+                                            <p class="cr4">Beef, tommato, green salad,pita,<br> ketchup, maionese, ….</p>
+                                            <div class="rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div><!--endrating-->
+                                            <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                            <a href="" class="btn btn-food">add to cart</a>
+                                        </div><!--enddetails-->
+                                    </div><!--endcol-->
+                                </div><!--endrow-->
+                            </div><!--endcontainer-->
+                        </div><!--endcarousel-item-->
+                        <a class="carousel-control-prev fa fa-angle-left" href="#sliderproduct" role="button" data-slide="prev">
+                        </a>
+                        <a class="carousel-control-next fa fa-angle-right" href="#sliderproduct" role="button" data-slide="next">
+                        </a>
+                    </div><!--endslidesliderproduct-->
+                </div><!--endrow-->
+            </div><!--endcontainer-->
+        </div><!--endbg-product-->
+    </div>
+
+</div>
+<section class="menu">
+    <!-- title -->
+    <div class="title">
+        <h2>our menu</h2>
+        <div class="underline"></div>
+    </div>
+    <!-- filter dropdown -->
+    <div class="btn-container"><button type="button" class="filter-btn" data-id="all">
+        all
+    </button><button type="button" class="filter-btn" data-id="breakfast">
+        breakfast
+    </button><button type="button" class="filter-btn" data-id="lunch">
+        lunch
+    </button><button type="button" class="filter-btn" data-id="shakes">
+        shakes
+    </button><button type="button" class="filter-btn" data-id="dinner">
+        dinner
+    </button></div>
+    <!-- menu items -->
+    <div class="section-center">
+        <!-- single item -->
+        <article class="menu-item" data-id="breakfast">
+            <img src="./menu-item.jpeg" alt="menu item" class="photo" />
+            <div class="item-info">
+                <header>
+                    <h4>buttermilk pancakes</h4>
+                    <h4 class="price">$15</h4>
+                </header>
+                <p class="item-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
+                    laboriosam excepturi! Quo, officia.
+                </p>
+            </div>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="menu-item" data-id="breakfast">
+            <img src="./menu-item.jpeg" alt="menu item" class="photo" />
+            <div class="item-info">
+                <header>
+                    <h4>buttermilk pancakes</h4>
+                    <h4 class="price">$15</h4>
+                </header>
+                <p class="item-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
+                    laboriosam excepturi! Quo, officia.
+                </p>
+            </div>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="menu-item" data-id="lunch">
+            <img src="./menu-item.jpeg" alt="menu item" class="photo" />
+            <div class="item-info">
+                <header>
+                    <h4>buttermilk pancakes</h4>
+                    <h4 class="price">$15</h4>
+                </header>
+                <p class="item-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
+                    laboriosam excepturi! Quo, officia.
+                </p>
+            </div>
+        </article>
+        <!-- end of single item -->
+    </div>
+</section>
+
+
+
+<footer th:insert="fragments.html :: footer">
+
+</footer>
+</body>
+</html>
