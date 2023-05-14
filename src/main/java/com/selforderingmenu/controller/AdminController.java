@@ -27,7 +27,7 @@ public class AdminController {
     }
 
     @PostMapping("/saveCategory")
-    public String saveCategory(@RequestParam("category") String category,@RequestParam("id") Long id){
+    public String saveCategory(@RequestParam("category") String category){
         categoryService.saveCategory(category);
         return "redirect:/admin";
     }

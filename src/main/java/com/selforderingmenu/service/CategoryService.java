@@ -6,6 +6,7 @@ import com.selforderingmenu.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.PublicKey;
 import java.util.List;
 
 @Service
@@ -31,5 +32,9 @@ public class CategoryService {
 
     public void delete(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    public Category getCategoryById(Long id){
+        return categoryRepository.getById(id);
     }
 }

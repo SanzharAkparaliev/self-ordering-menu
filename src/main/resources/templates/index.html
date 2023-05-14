@@ -100,67 +100,35 @@
         <div class="underline"></div>
     </div>
     <!-- filter dropdown -->
-    <div class="btn-container"><button type="button" class="filter-btn" data-id="all">
-        all
-    </button><button type="button" class="filter-btn" data-id="breakfast">
-        breakfast
-    </button><button type="button" class="filter-btn" data-id="lunch">
-        lunch
-    </button><button type="button" class="filter-btn" data-id="shakes">
-        shakes
-    </button><button type="button" class="filter-btn" data-id="dinner">
-        dinner
-    </button></div>
+    <div class="btn-container">
+        <a th:href="@{/category/all}">
+            <button type="button" class="filter-btn" data-id="all">
+                all
+            </button>
+        </a>
+        <a href="#" th:each="category : ${categories}" th:href="@{/category/{id}(id=${category.id})}">
+        <button  type="button" class="filter-btn" data-id="breakfast" th:text="${category.name}">
+            <a href="#" th:text="${category.name}" th:href="@{category/{id}(id=${category.id})}"></a>
+        </button>
+        </a>
+
+    </div>
     <!-- menu items -->
     <div class="section-center">
         <!-- single item -->
-        <article class="menu-item" data-id="breakfast">
-            <img src="./menu-item.jpeg" alt="menu item" class="photo" />
+        <article class="menu-item" data-id="breakfast" th:each="product: ${products}">
+            <img th:src="${product.url}" alt="menu item" class="photo" />
             <div class="item-info">
                 <header>
-                    <h4>buttermilk pancakes</h4>
-                    <h4 class="price">$15</h4>
+                    <h4 th:text="${product.name}">buttermilk pancakes</h4>
+                    <h4 class="price" th:text="${product.price}">$15</h4>
                 </header>
-                <p class="item-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
-                    laboriosam excepturi! Quo, officia.
+                <p class="item-text" th:text="${product.description}">
+
                 </p>
             </div>
         </article>
-        <!-- end of single item -->
-        <!-- single item -->
-        <article class="menu-item" data-id="breakfast">
-            <img src="./menu-item.jpeg" alt="menu item" class="photo" />
-            <div class="item-info">
-                <header>
-                    <h4>buttermilk pancakes</h4>
-                    <h4 class="price">$15</h4>
-                </header>
-                <p class="item-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
-                    laboriosam excepturi! Quo, officia.
-                </p>
-            </div>
-        </article>
-        <!-- end of single item -->
-        <!-- single item -->
-        <article class="menu-item" data-id="lunch">
-            <img src="./menu-item.jpeg" alt="menu item" class="photo" />
-            <div class="item-info">
-                <header>
-                    <h4>buttermilk pancakes</h4>
-                    <h4 class="price">$15</h4>
-                </header>
-                <p class="item-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
-                    laboriosam excepturi! Quo, officia.
-                </p>
-            </div>
-        </article>
-        <!-- end of single item -->
+
     </div>
 </section>
 
