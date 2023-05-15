@@ -33,16 +33,16 @@
                 <tr th:each="product, iStat : ${products}">
                     <th scope="row" th:text="${iStat.index + 1}">1</th>
                     <td th:text="${product.name}"></td>
-                    <td style="display: none" th:text="${product.id}"></td>
                     <td th:text="${product.price}"></td>
                     <td th:text="${product.url}"></td>
                     <td th:text="${product.description}"></td>
                     <td th:text="${product.category.name}"></td>
+                    <td style="display: none" th:text="${product.id}"></td>
                     <td>
                         <div class="table-actions">
-                            <a href="#" data-color="#265ed7" class="edit-btn" data-toggle="modal" data-target="#editModal"
-                            ><i class="icon-copy dw dw-edit2"></i
-                            ></a>
+                            <a href="#" data-color="#265ed7" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editProduct">
+                                <i class="icon-copy dw dw-edit2"></i>
+                            </a>
                             <a href="#"  th:href="@{/admin/product/delete/{id}(id=${product.id})}" data-color="#e95959">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </a>
@@ -70,17 +70,17 @@
             <form action="/admin/saveProduct" method="post" th:object="${product}">
 
                 <div class="modal-body">
-                    <input class="form-control" type="text" id="name" name="name" placeholder="Product Name" required>
+                    <input class="form-control" type="text"  name="name" placeholder="Product Name" required>
                 </div>
                 <div class="modal-body">
-                    <input class="form-control" type="number" id="price" name="price" placeholder="Product price" required>
+                    <input class="form-control" type="number"  name="price" placeholder="Product price" required>
                 </div>
                 <div class="modal-body">
-                    <input class="form-control" type="text" id="url" name="url" placeholder="Product image url" required>
+                    <input class="form-control" type="text"  name="url" placeholder="Product image url" required>
                 </div>
                 <div class="modal-body">
-                    <label class="form-label" for="textAreaExample">Description</label>
-                    <textarea class="form-control" name="description" id="textAreaExample1" rows="4"></textarea>
+                    <label class="form-label" >Description</label>
+                    <textarea class="form-control" name="description" rows="4"></textarea>
                 </div>
                 <div class="modal-body">
                     <select class="form-control form-select form-select-sm" id="dropDownList" name="category">
@@ -95,28 +95,43 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eModalLabel">Add Category</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Update Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/updateCategory" method="post">
-                <div class="modal-body">
-                    <label class="col-form-label">Category</label>
-                    <input id="category" value="category" type="text" name="category">
-                    <input type="hidden" id="id" name="id" >
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
+                <form action="/admin/updateProduct" method="post" th:object="${product}">
+
+                    <div class="modal-body">
+                        <input class="form-control" type="text" id="name" name="name" placeholder="Product Name" required>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id" name="id" >
+                        <input class="form-control" type="number" id="price" name="price" placeholder="Product price" required>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" id="url" name="url" placeholder="Product image url" required>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label" for="textAreaExample">Description</label>
+                        <textarea class="form-control" name="description" id="description" rows="4"></textarea>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-control form-select form-select-sm"   name="category">
+                            <option id="category"  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
+
 
 <!-- js -->
 <script src="vendors/scripts/core.js"></script>
@@ -147,12 +162,23 @@
             return $(this).text();
         }).get();
 
-        category = rowData[0];
-        id = rowData[1]
-        console.log(category)
+        var productName = rowData[0];
+        var price = rowData[1];
+        var url = rowData[2];
+        var description = rowData[3];
+        var category = rowData[4];
+        var id = rowData[5];
 
-        $('#category').val(category)
-        $('#id').val(id)
+        $('#name').val(productName);
+        $('#price').val(price);
+        $('#url').val(url);
+        $('#description').val(description);
+
+        // Select the category option based on its value
+        var $categoryOption = $('#category option[value="' + category + '"]');
+        $categoryOption.prop('selected', true);
+
+        $('#id').val(id);
     })
 </script>
 <!-- End Google Tag Manager (noscript) -->
