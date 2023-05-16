@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments.html :: head"></head>
+<body>
+
+<nav th:insert="fragments.html :: navbar">
+</nav>
+<div class="bg " style="margin-top: 100px; margin-bottom: 30px;">
+    <div class="container">
+        <a href="/" style="margin-left: 70px;color:black;text-decoration: none;">	&lt; Back to menu</a>
+    </div>
+    <div class="card">
+        <div class="product-image">
+            <img th:src="${product.url}" style="height: 700px;text-align: center;"  alt="" />
+        </div>
+        <div class="product-info" style="margin-left: 30px;">
+            <h1 class="product-name" th:text="${product.name}"></h1>
+            <ul class="preferences" style="margin-bottom: 8px;">
+                <li>
+                    <span class="list-name" th:text="${product.calories}"></span>
+                </li>
+            </ul>
+            <p class="mr-5" style="font-size: 12px;" th:text="${product.description}"> </p>
+            <div style="margin-bottom: 30px; ">
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+
+            <div>
+                <h5 style="display: inline;">$ <span th:text="${product.price}"></span></h5>
+                <a style="display: inline; margin-left: 20px;" class="btn" href="#">Add to basket</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:insert="fragments.html :: footer">
+
+</footer>
+</body>
+</html>

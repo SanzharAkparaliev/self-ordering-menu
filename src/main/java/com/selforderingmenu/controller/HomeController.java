@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,8 +26,13 @@ public class HomeController {
     @GetMapping("/")
     public String getHomePage(Model model){
         List<Product> allProduct = productService.getAllProduct();
-
         List<Category> allCategory = categoryService.findAllCategory();
+        List<Product> array = new ArrayList<>();
+        if(allProduct.size() >= 3){
+            array.add(allProduct.get(allProduct.size()-1));
+        }
+
+        model.addAttribute("productList",array);
         model.addAttribute("categories",allCategory);
         model.addAttribute("title","Self Ordering Menu");
         model.addAttribute("title","Self Ordering Menu");
@@ -55,6 +60,15 @@ public class HomeController {
         model.addAttribute("title","All");
         model.addAttribute("products",allProduct);
         return "product";
+    }
+
+    @GetMapping("/product/{id}")
+    public String getSingleProuct(@PathVariable("id") Long productId,Model model){
+        Product product = productService.getProduct(productId);
+
+        model.addAttribute("title",product.getName());
+        model.addAttribute("product",product);
+        return "singleProduct";
     }
 
 }

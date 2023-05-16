@@ -38,6 +38,13 @@
         <p class="item-text" th:text="${product.description}">
 
         </p>
+        <div style="text-align: right">
+          <a style="align-content: end" th:href="@{/product/{id}(id=${product.id})}">
+            <button  type="button" class="filter-btn" data-id="breakfast" >
+              More
+            </button>
+          </a>
+        </div>
       </div>
     </article>
 

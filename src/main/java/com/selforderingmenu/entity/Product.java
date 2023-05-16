@@ -11,19 +11,21 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "productsMenu")
 public class Product extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     private String name;
     @Column(length = 15000)
     private String description;
     private Double price;
+
+    @Column(length = 150000)
     private String url;
+    private String calories;
 
     @ManyToOne
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
 
 }

@@ -21,6 +21,7 @@ public class ProductService {
         newProduct.setDescription(product.getDescription());
         newProduct.setPrice(product.getPrice());
         newProduct.setUrl(product.getUrl());
+        newProduct.setCalories(product.getCalories());
         productRepository.save(newProduct);
     }
 
@@ -31,19 +32,24 @@ public class ProductService {
         productInDb.setCategory(product.getCategory());
         productInDb.setName(product.getName());
         productInDb.setUrl(product.getUrl());
+        productInDb.setCalories(product.getCalories());
         productRepository.save(productInDb);
     }
 
     public List<Product> getAllProduct(){
-        return     productRepository.findAll();
+        return     productRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public List<Product> getProductByCategory(Category category){
-        return productRepository.findByCategory(category);
+        return productRepository.findByCategoryOrderByCreatedAtDesc(category);
     }
 
     public void  deleteProduct(Long id){
         productRepository.deleteById(id);
+    }
+
+    public Product getProduct(Long id){
+        return productRepository.findById(id).get();
     }
 
 

@@ -23,9 +23,10 @@
                     <th class="table-plus">ID</th>
                     <th >Product Name</th>
                     <th >Price</th>
-                    <th >ImageUrl</th>
+                    <th >Image</th>
                     <th >Description </th>
                     <th >Category</th>
+                    <th>Calories</th>
                     <th class="datatable-nosort">Actions</th>
                 </tr>
                 </thead>
@@ -34,10 +35,16 @@
                     <th scope="row" th:text="${iStat.index + 1}">1</th>
                     <td th:text="${product.name}"></td>
                     <td th:text="${product.price}"></td>
-                    <td th:text="${product.url}"></td>
+                    <td style="display: none" th:text="${product.url}">
+                        <img th:src="${product.url}" style="height: 100px;width: auto">
+                    </td>
+                    <td>
+                        <img th:src="${product.url}" style="height: 100px;width: auto">
+                    </td>
                     <td th:text="${product.description}"></td>
                     <td th:text="${product.category.name}"></td>
                     <td style="display: none" th:text="${product.id}"></td>
+                    <td th:text="${product.calories}"></td>
                     <td>
                         <div class="table-actions">
                             <a href="#" data-color="#265ed7" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editProduct">
@@ -79,6 +86,9 @@
                     <input class="form-control" type="text"  name="url" placeholder="Product image url" required>
                 </div>
                 <div class="modal-body">
+                    <input class="form-control" type="text"  name="calories" placeholder="Product  Calories" required>
+                </div>
+                <div class="modal-body">
                     <label class="form-label" >Description</label>
                     <textarea class="form-control" name="description" rows="4"></textarea>
                 </div>
@@ -113,6 +123,9 @@
                     </div>
                     <div class="modal-body">
                         <input class="form-control" type="text" id="url" name="url" placeholder="Product image url" required>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" id="calories" name="calories" placeholder="Product calories" required>
                     </div>
                     <div class="modal-body">
                         <label class="form-label" for="textAreaExample">Description</label>
@@ -165,15 +178,16 @@
         var productName = rowData[0];
         var price = rowData[1];
         var url = rowData[2];
-        var description = rowData[3];
-        var category = rowData[4];
-        var id = rowData[5];
+        var description = rowData[4];
+        var category = rowData[5];
+        var id = rowData[6];
+        var calories = rowData[7];
 
         $('#name').val(productName);
         $('#price').val(price);
         $('#url').val(url);
         $('#description').val(description);
-
+        $('#calories').val(calories);
         // Select the category option based on its value
         var $categoryOption = $('#category option[value="' + category + '"]');
         $categoryOption.prop('selected', true);
