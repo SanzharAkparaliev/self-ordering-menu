@@ -11,28 +11,27 @@
     </div>
     <div class="card">
         <div class="product-image">
-            <img th:src="${product.url}" style="height: 700px;text-align: center;"  alt="" />
+            <img id="productImg" th:src="${product.url}" style="height: 700px;text-align: center;"  alt="" />
         </div>
         <div class="product-info" style="margin-left: 30px;">
-            <h1 class="product-name" th:text="${product.name}"></h1>
+            <h1 class="product-name" id="productName" th:text="${product.name}"></h1>
             <ul class="preferences" style="margin-bottom: 8px;">
                 <li>
-                    <span class="list-name" th:text="${product.calories}"></span>
+                    <span class="list-name" id="productCalories"  th:text="${product.calories}"></span>
                 </li>
             </ul>
-            <p class="mr-5" style="font-size: 12px;" th:text="${product.description}"> </p>
+            <p id="productDescription" class="mr-5" style="font-size: 12px;" th:text="${product.description}"> </p>
             <div style="margin-bottom: 30px; ">
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select id="productType" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option value="One">One</option>
+                    <option value="Two">Two</option>
+                    <option value="Three">Three</option>
                 </select>
             </div>
 
             <div>
-                <h5 style="display: inline;">$ <span th:text="${product.price}"></span></h5>
-                <a style="display: inline; margin-left: 20px;" class="btn" href="#">Add to basket</a>
+                <h5 style="display: inline;">$ <span id="productPrice" th:text="${product.price}"></span></h5>
+                <a style="display: inline; margin-left: 20px;" class="btn basket" href="#">Add to basket</a>
             </div>
         </div>
     </div>
@@ -42,5 +41,36 @@
 <footer th:insert="fragments.html :: footer">
 
 </footer>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).on("click",".basket",function (){
+        var img = document.getElementById('productImg').getAttribute('src');
+        var price = $('#productPrice').text();;
+        var description = $('#productDescription').text();;
+        var name = $('#productName').text();
+        var type = $('#productType').val()
+        console.log(type)
+
+        $.ajax({
+            method: 'POST',
+            url: '/basket/',
+            data: {
+                name: name,
+                description: description,
+                price: price,
+                type: type,
+                url: img
+            },
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    })
+</script>
+
 </body>
 </html>
