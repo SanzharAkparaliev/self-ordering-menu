@@ -30,7 +30,7 @@ public class BasketService {
     }
 
 
-
-
-
+    public void delete(Long id) {
+        basketRepository.deleteById(id);
+    }
 }

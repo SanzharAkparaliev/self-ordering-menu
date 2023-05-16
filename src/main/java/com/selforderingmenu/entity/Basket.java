@@ -18,6 +18,8 @@ public class Basket extends BaseEntity {
     private String name;
     private String type;
     private Double price;
+    private String calories;
+
 
 
 

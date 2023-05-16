@@ -16,4 +16,10 @@ public class BasketRestController {
         basketService.saveProductToBasket(basket);
         return "success";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProductInBasket(@PathVariable("id") Long id){
+        basketService.delete(id);
+        return "success";
+    }
 }

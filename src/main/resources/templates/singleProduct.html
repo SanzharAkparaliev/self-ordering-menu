@@ -49,6 +49,7 @@
         var price = $('#productPrice').text();;
         var description = $('#productDescription').text();;
         var name = $('#productName').text();
+        var calories = $('#productCalories').text();
         var type = $('#productType').val()
         console.log(type)
 
@@ -60,7 +61,8 @@
                 description: description,
                 price: price,
                 type: type,
-                url: img
+                url: img,
+                calories:calories
             },
             success: function (res) {
                 console.log(res);
