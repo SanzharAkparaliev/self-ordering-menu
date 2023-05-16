@@ -35,7 +35,7 @@
             </span>Menu
           </a>
         </li>
-        <li class="nav-item px-lg-2">
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN')" class="nav-item px-lg-2">
           <a class="nav-link" href="/admin">
             <span class="d-inline-block d-lg-none icon-width">
               <i class="far fa-user"></i>
@@ -45,9 +45,9 @@
         </li>
 
 
-        <li class="nav-item px-lg-2"> <a class="nav-link" href="basket.html">
+        <li class="nav-item px-lg-2"> <a class="nav-link" href="/basket">
 			<span class="d-inline-block d-lg-none icon-width"><i class="far fa-envelope"></i>
-			</span>Contact</a>
+			</span>Basket</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto mt-3 mt-lg-0">

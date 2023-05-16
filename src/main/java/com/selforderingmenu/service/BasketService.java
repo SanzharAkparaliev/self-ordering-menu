@@ -14,6 +14,8 @@ public class BasketService {
     private BasketRepository basketRepository;
 
     public void saveProductToBasket(Basket basket){
+        basket.setCount(1);
+        basket.setTotal((int) (basket.getCount() * basket.getPrice()));
         basketRepository.save(basket);
     }
 
@@ -32,5 +34,14 @@ public class BasketService {
 
     public void delete(Long id) {
         basketRepository.deleteById(id);
+    }
+
+    public Integer changeCount(Long productId,Integer count){
+        Basket byId = basketRepository.getById(productId);
+        Integer subTotal = (int) (count * byId.getPrice());
+        byId.setCount(count);
+        byId.setTotal(subTotal);
+        basketRepository.save(byId);
+        return  subTotal;
     }
 }

@@ -2,6 +2,7 @@ package com.selforderingmenu.controller;
 
 
 import com.selforderingmenu.entity.Basket;
+import com.selforderingmenu.entity.Product;
 import com.selforderingmenu.service.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,5 +22,11 @@ public class BasketRestController {
     public String deleteProductInBasket(@PathVariable("id") Long id){
         basketService.delete(id);
         return "success";
+    }
+
+    @GetMapping("/count/{count}/product/{id}")
+    public Integer changeCount(@PathVariable("id") Long productId, @PathVariable("count") Integer count){
+        Integer integer = basketService.changeCount(productId, count);
+        return integer;
     }
 }

@@ -19,7 +19,13 @@ public class BasketController {
     @GetMapping
     public String getBasketPage(Model model){
         List<Basket> baskets = basketService.findAll();
+        double sumTotal = 0.0;
+        for (Basket item : baskets) {
+            sumTotal += item.getPrice() * item.getCount();
+        }
         model.addAttribute("baskets",baskets);
+        model.addAttribute("total",sumTotal);
+
         return "basket";
     }
 
