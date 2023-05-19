@@ -13,13 +13,8 @@
         <div class="underline"></div>
     </div>
     <!-- filter dropdown -->
-    <div class="btn-container">
-        <a th:href="@{/category/all}">
-            <button type="button" class="filter-btn" data-id="all">
-                all
-            </button>
-        </a>
-        <a href="#" th:each="category : ${childCategories}" th:href="@{/category/{id}(id=${category.id})}">
+    <div class="btn-container" th:if="${childCategories}">
+        <a href="#" th:each="category : ${childCategories}" th:href="@{/category/{cid}/childcategory/{id}(cid=${categoryId},id=${category.id})}">
             <button  type="button" class="filter-btn" data-id="breakfast" th:text="${category.name}">
                 <a href="#" th:text="${category.name}" th:href="@{category/{id}(id=${category.id})}"></a>
             </button>

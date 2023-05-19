@@ -3,8 +3,10 @@ package com.selforderingmenu.controller;
 
 import com.selforderingmenu.entity.Category;
 import com.selforderingmenu.entity.ChildCategory;
+import com.selforderingmenu.entity.Product;
 import com.selforderingmenu.service.CategoryService;
 import com.selforderingmenu.service.ChildCategoriesService;
+import com.selforderingmenu.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class AdminController {
     private CategoryService categoryService;
     @Autowired
     private ChildCategoriesService childCategoriesService;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping
     public String getAdminPage(Model model){
@@ -88,5 +93,33 @@ public class AdminController {
     public String updateChildCategory(@ModelAttribute ChildCategory childCategory){
         childCategoriesService.save(childCategory);
         return "redirect:/admin/childcategory";
+    }
+
+    @GetMapping("/product")
+    public String getProductPage(Model model){
+        List<ChildCategory> categories = childCategoriesService.getAll();
+        List<Product> allProduct = productService.getAllProduct();
+        model.addAttribute("products",allProduct);
+        model.addAttribute("categories",categories);
+        model.addAttribute("title","Products");
+        return "admin/product";
+    }
+
+    @GetMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id){
+        productService.deleteProduct(id);
+        return "redirect:/admin/product";
+    }
+
+    @PostMapping("/updateProduct")
+    public String updateProduct(@ModelAttribute("product") Product product){
+        productService.updateProduct(product);
+        return "redirect:/admin/product";
+    }
+
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute("product") Product product){
+        productService.saveProduct(product);
+        return "redirect:/admin/product";
     }
 }

@@ -42,7 +42,7 @@
                         <img th:src="${product.url}" style="height: 100px;width: auto">
                     </td>
                     <td th:text="${product.description}"></td>
-                    <td th:text="${product.category.name}"></td>
+                    <td th:text="${product.childCategory.getName()}"></td>
                     <td style="display: none" th:text="${product.id}"></td>
                     <td th:text="${product.calories}"></td>
                     <td>
@@ -93,7 +93,7 @@
                     <textarea class="form-control" name="description" rows="4"></textarea>
                 </div>
                 <div class="modal-body">
-                    <select class="form-control form-select form-select-sm" id="dropDownList" name="category">
+                    <select class="form-control form-select form-select-sm" id="dropDownList" name="childCategory">
                         <option  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                     </select>
                 </div>
@@ -128,11 +128,11 @@
                         <input class="form-control" type="text" id="calories" name="calories" placeholder="Product calories" required>
                     </div>
                     <div class="modal-body">
-                        <label class="form-label" for="textAreaExample">Description</label>
+                        <label class="form-label">Description</label>
                         <textarea class="form-control" name="description" id="description" rows="4"></textarea>
                     </div>
                     <div class="modal-body">
-                        <select class="form-control form-select form-select-sm"   name="category">
+                        <select class="form-control form-select form-select-sm"   name="childCategory">
                             <option id="category"  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                         </select>
                     </div>

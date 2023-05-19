@@ -35,4 +35,8 @@ public class ChildCategoriesService {
         Category category = categoryRepository.getById(categoryId);
         return childCategoryRepository.findByCategory(category);
     }
+
+    public ChildCategory getChildCategory(Long id){
+        return childCategoryRepository.getById(id);
+    }
 }
