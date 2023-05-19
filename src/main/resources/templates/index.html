@@ -9,7 +9,7 @@
 <section  class="menu" style="margin-top: 80px;">
     <!-- title -->
     <div class="title">
-        <h2>our menu</h2>
+        <h2 th:text="${categoryName}">our menu</h2>
         <div class="underline"></div>
     </div>
     <!-- filter dropdown -->
@@ -19,7 +19,7 @@
                 all
             </button>
         </a>
-        <a href="#" th:each="category : ${categories}" th:href="@{/category/{id}(id=${category.id})}">
+        <a href="#" th:each="category : ${childCategories}" th:href="@{/category/{id}(id=${category.id})}">
             <button  type="button" class="filter-btn" data-id="breakfast" th:text="${category.name}">
                 <a href="#" th:text="${category.name}" th:href="@{category/{id}(id=${category.id})}"></a>
             </button>

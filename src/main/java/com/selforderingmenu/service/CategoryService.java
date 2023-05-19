@@ -2,6 +2,7 @@ package com.selforderingmenu.service;
 
 
 import com.selforderingmenu.entity.Category;
+import com.selforderingmenu.entity.ChildCategory;
 import com.selforderingmenu.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class CategoryService {
 
     public void  deleteCategory(Long id){
         categoryRepository.deleteById(id);
+    }
+
+    public Category getCategory(Long id){
+        return categoryRepository.getById(id);
     }
 }

@@ -67,7 +67,26 @@ public class AdminController {
         model.addAttribute("categories",categories);
         model.addAttribute("title","Child Category ");
         model.addAttribute("childCategories",childCategories);
-
+        model.addAttribute("childCategory", new ChildCategory());
         return "/admin/childCategory";
+    }
+
+    @PostMapping("/saveChildCategory")
+    public String saveChildCategory(@ModelAttribute ChildCategory childCategory){
+        childCategoriesService.save(childCategory);
+        return "redirect:/admin/childcategory";
+    }
+
+    @GetMapping("/childcategory/delete/{id}")
+    public String deleteChildCategory(@PathVariable("id") Long id){
+        childCategoriesService.delete(id);
+        return "redirect:/admin/childcategory";
+    }
+
+
+    @PostMapping("/updateChildCategory")
+    public String updateChildCategory(@ModelAttribute ChildCategory childCategory){
+        childCategoriesService.save(childCategory);
+        return "redirect:/admin/childcategory";
     }
 }

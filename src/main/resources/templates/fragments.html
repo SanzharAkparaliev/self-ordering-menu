@@ -36,7 +36,7 @@
           </a>
         </li>
         <li  th:each="category, iStat : ${categories}"  class="nav-item px-lg-2">
-          <a class="nav-link" href="/" th:text="${category.name}">
+          <a class="nav-link" href="/" th:text="${category.name}" th:href="@{/category/{id}(id=${category.id})}">
             <span class="d-inline-block d-lg-none icon-width">
               <i class="far fa-user"></i>
               </i>

@@ -22,6 +22,7 @@
                 <tr>
                     <th class="table-plus">ID</th>
                     <th >Name</th>
+                    <th>Category</th>
                     <th class="datatable-nosort">Actions</th>
                 </tr>
                 </thead>
@@ -30,12 +31,13 @@
                     <th scope="row" th:text="${iStat.index + 1}">1</th>
                     <td th:text="${childCategory.name}"></td>
                     <td style="display: none" th:text="${childCategory.id}"></td>
+                    <th th:text="${childCategory.category.name}"></th>
                     <td>
                         <div class="table-actions">
                             <a href="#" data-color="#265ed7" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">
                                 <i class="icon-copy dw dw-edit2"></i>
                             </a>
-                            <a href="#"  th:href="@{/admin/category/delete/{id}(id=${childCategory.id})}" data-color="#e95959">
+                            <a href="#"  th:href="@{/admin/childcategory/delete/{id}(id=${childCategory.id})}" data-color="#e95959">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </a>
                         </div>
@@ -56,16 +58,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Child Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/saveCategory" method="post">
-                <div class="modal-body">
+            <form action="/admin/saveChildCategory" method="post" >
+                <div class="modal-body ">
                     <select class="form-control form-select form-select-sm" id="dropDownList" name="category">
                         <option  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                     </select>
-                    <label class="col-form-label">Category</label>
-                    <input type="text" name="category">
+
+                    <label class="col-form-label  ">Child Category</label>
+                    <input class="form-control" type="text" name="name" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -80,14 +83,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eModalLabel">Add Category</h5>
+                <h5 class="modal-title" id="eModalLabel">Update Child Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/updateCategory" method="post">
+            <form action="/admin/updateChildCategory" method="post">
                 <div class="modal-body">
-                    <label class="col-form-label">Category</label>
-                    <input id="category" value="category" type="text" name="category">
+                    <label class="col-form-label">Name</label>
+                    <input class="form-control" id="name" value="name" type="text" name="name" required>
                     <input type="hidden" id="id" name="id" >
+                </div>
+                <div class="modal-body">
+                    <select class="form-control form-select form-select-sm"   name="category">
+                        <option id="category"  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -127,11 +135,11 @@
             return $(this).text();
         }).get();
 
-        category = rowData[0];
+        name = rowData[0];
         id = rowData[1]
         console.log(category)
 
-        $('#category').val(category)
+        $('#name').val(name)
         $('#id').val(id)
     })
 </script>
