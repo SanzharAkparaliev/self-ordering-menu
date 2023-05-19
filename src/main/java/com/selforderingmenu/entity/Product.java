@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "productsMenu")
 public class Product extends BaseEntity{
 
 
@@ -26,7 +25,7 @@ public class Product extends BaseEntity{
     private String calories;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    private ChildCategory childCategory;
+
 
 }

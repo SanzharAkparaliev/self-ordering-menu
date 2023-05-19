@@ -2,7 +2,9 @@ package com.selforderingmenu.controller;
 
 
 import com.selforderingmenu.entity.Category;
+import com.selforderingmenu.entity.ChildCategory;
 import com.selforderingmenu.service.CategoryService;
+import com.selforderingmenu.service.ChildCategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,30 +18,56 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ChildCategoriesService childCategoriesService;
 
     @GetMapping
     public String getAdminPage(Model model){
-        List<Category> allCategory = categoryService.findAllCategory();
+        model.addAttribute("title","Admin Panel");
+        return "admin/admin";
+    }
 
-        model.addAttribute("title","admin");
-        model.addAttribute("categories",allCategory);
-        return "admin/homePage";
+    @GetMapping("/category")
+    public String getCategoryPage(Model model){
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("categories",categories);
+        model.addAttribute("title","Categories");
+        return "admin/category";
     }
 
     @PostMapping("/saveCategory")
-    public String saveCategory(@RequestParam("category") String category){
+    public String saveCategory(@RequestParam("category") String categoryName){
+        Category category = new Category();
+        category.setName(categoryName);
+
         categoryService.saveCategory(category);
-        return "redirect:/admin";
+        return "redirect:/admin/category";
     }
+
     @PostMapping("/updateCategory")
-    public String updateCategory(@RequestParam("category") String category,@RequestParam("id") Long id){
-        categoryService.updateCategory(category,id);
-        return "redirect:/admin";
+    public String updateCategory(@RequestParam("category") String categoryName,@RequestParam("id") Long id){
+        Category category = new Category();
+        category.setName(categoryName);
+        category.setId(id);
+
+        categoryService.saveCategory(category);
+        return "redirect:/admin/category";
     }
 
     @GetMapping("/category/delete/{id}")
     public String deleteCategory(@PathVariable("id") Long id){
-        categoryService.delete(id);
-        return "redirect:/admin";
+        categoryService.deleteCategory(id);
+        return "redirect:/admin/category";
+    }
+
+    @GetMapping("/childcategory")
+    public String childCategoryPage(Model model){
+        List<ChildCategory> childCategories = childCategoriesService.getAll();
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("categories",categories);
+        model.addAttribute("title","Child Category ");
+        model.addAttribute("childCategories",childCategories);
+
+        return "/admin/childCategory";
     }
 }

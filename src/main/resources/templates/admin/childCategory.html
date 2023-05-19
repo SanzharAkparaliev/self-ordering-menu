@@ -10,10 +10,10 @@
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
         <div class="card-box pb-10">
-            <div class="h5 pd-20 mb-0">Category</div>
+            <div class="h5 pd-20 mb-0">Child  Category</div>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Add Category
+                Add Child Category
             </button>
 
 
@@ -26,16 +26,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="category, iStat : ${categories}">
+                <tr th:each="childCategory, iStat : ${childCategories}">
                     <th scope="row" th:text="${iStat.index + 1}">1</th>
-                    <td th:text="${category.name}"></td>
-                    <td style="display: none" th:text="${category.id}"></td>
+                    <td th:text="${childCategory.name}"></td>
+                    <td style="display: none" th:text="${childCategory.id}"></td>
                     <td>
                         <div class="table-actions">
-                            <a href="#" data-color="#265ed7" class="edit-btn" data-toggle="modal" data-target="#editModal"
-                            ><i class="icon-copy dw dw-edit2"></i
-                            ></a>
-                            <a href="#"  th:href="@{/admin/category/delete/{id}(id=${category.id})}" data-color="#e95959">
+                            <a href="#" data-color="#265ed7" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <i class="icon-copy dw dw-edit2"></i>
+                            </a>
+                            <a href="#"  th:href="@{/admin/category/delete/{id}(id=${childCategory.id})}" data-color="#e95959">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </a>
                         </div>
@@ -61,8 +61,11 @@
             </div>
             <form action="/admin/saveCategory" method="post">
                 <div class="modal-body">
-                        <label class="col-form-label">Category</label>
-                        <input type="text" name="category">
+                    <select class="form-control form-select form-select-sm" id="dropDownList" name="category">
+                        <option  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    </select>
+                    <label class="col-form-label">Category</label>
+                    <input type="text" name="category">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

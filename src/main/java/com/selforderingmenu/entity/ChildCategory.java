@@ -1,13 +1,13 @@
 package com.selforderingmenu.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -16,10 +16,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category extends BaseEntity{
+public class ChildCategory extends BaseEntity{
     private String name;
 
+    @ManyToOne
+    private Category category;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ChildCategory> childCategories;
+    @OneToMany(mappedBy = "childCategory")
+    private List<Product> productList;
 }
