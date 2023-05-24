@@ -1,8 +1,10 @@
 package com.selforderingmenu.controller;
 
+import com.selforderingmenu.entity.Basket;
 import com.selforderingmenu.entity.Category;
 import com.selforderingmenu.entity.ChildCategory;
 import com.selforderingmenu.entity.Product;
+import com.selforderingmenu.service.BasketService;
 import com.selforderingmenu.service.CategoryService;
 import com.selforderingmenu.service.ChildCategoriesService;
 import com.selforderingmenu.service.ProductService;
@@ -23,6 +25,8 @@ public class HomeController {
     private ChildCategoriesService childCategoriesService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private BasketService basketService;
     @GetMapping
     public String getHomePage(Model model){
         List<ChildCategory> childCategories = childCategoriesService.getAll();
@@ -30,6 +34,8 @@ public class HomeController {
         List<Product> allProduct = productService.getAllProduct();
 
 
+        List<Basket> baskets = basketService.findAll();
+        model.addAttribute("baskets",baskets);
         model.addAttribute("categoryName","Our Menu");
         model.addAttribute("title","Menu");
         model.addAttribute("categories",categories);
@@ -43,6 +49,8 @@ public class HomeController {
         List<Category> categories = categoryService.findAll();
         Category category = categoryService.getCategory(id);
         List<Product> products = productService.findByCategory(category);
+        List<Basket> baskets = basketService.findAll();
+        model.addAttribute("baskets",baskets);
         model.addAttribute("categories",categories);
         model.addAttribute("childCategories",childCategories);
         model.addAttribute("categoryName",category.getName());
@@ -60,6 +68,8 @@ public class HomeController {
         List<Category> categories = categoryService.findAll();
         ChildCategory childCategory = childCategoriesService.getChildCategory(id);
         List<Product> productByCategory = productService.getProductByCategory(childCategory);
+        List<Basket> baskets = basketService.findAll();
+        model.addAttribute("baskets",baskets);
         model.addAttribute("childCategories",childCategories);
         model.addAttribute("categoryName",category.getName());
         model.addAttribute("title",category.getName());
@@ -76,12 +86,28 @@ public class HomeController {
         List<Category> categories = categoryService.findAll();
         Category category = categoryService.getCategory(id);
         List<Product> products = productService.findByCategory(category);
+        List<Basket> baskets = basketService.findAll();
+        model.addAttribute("baskets",baskets);
         model.addAttribute("categories",categories);
         model.addAttribute("childCategories",childCategories);
         model.addAttribute("categoryName",category.getName());
         model.addAttribute("title",category.getName());
         model.addAttribute("products",products);
         return "index";
+    }
+
+    @GetMapping("/basket")
+    public String getBasketPage(Model model){
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("categories",categories);
+        List<Basket> baskets = basketService.findAll();
+        double sumTotal = 0.0;
+        for (Basket item : baskets) {
+            sumTotal += item.getPrice() * item.getCount();
+        }
+        model.addAttribute("baskets",baskets);
+        model.addAttribute("total",sumTotal);
+        return "basket";
     }
 
 

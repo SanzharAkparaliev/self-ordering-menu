@@ -1,43 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:insert="fragments.html :: head"></head>
+
 <body>
+<nav th:insert="fragments.html :: navbar"></nav>
 
-<nav th:insert="fragments.html :: navbar">
-</nav>
-
-<section  class="menu" style="margin-top: 80px;">
+<section class="menu" style="margin-top: 80px;">
     <!-- title -->
     <div class="title">
         <h2 th:text="${categoryName}">our menu</h2>
         <div class="underline"></div>
     </div>
+
     <!-- filter dropdown -->
     <div class="btn-container" th:if="${childCategories}">
         <a href="#" th:each="category : ${childCategories}" th:href="@{/category/{cid}/childcategory/{id}(cid=${categoryId},id=${category.id})}">
-            <button  type="button" class="filter-btn" data-id="breakfast" th:text="${category.name}">
+            <button type="button" class="filter-btn" data-id="breakfast" th:text="${category.name}">
                 <a href="#" th:text="${category.name}" th:href="@{category/{id}(id=${category.id})}"></a>
             </button>
         </a>
-
     </div>
     <div class="section-center">
         <article class="menu-item" data-id="breakfast" th:each="product: ${products}">
-            <img th:src="${product.url}" alt="menu item" class="photo" />
+            <img th:src="${product.url}" id="productImg" alt="menu item" class="photo" />
             <div class="item-info">
                 <header>
-                    <h4 th:text="${product.name}">buttermilk pancakes</h4>
-                    <h4 class="price" th:text="${product.price}">$15</h4>
+                    <h4 th:text="${product.name}" id="productName">buttermilk pancakes</h4>
+                    <h4 class="price" th:text="${product.price}" id="productPrice">$15</h4>
                 </header>
-                <p class="item-text" th:text="${product.description}">
-
-                </p>
+                <p class="item-text" th:text="${product.description}" id="productDescription"></p>
                 <div style="text-align: right">
-                    <a style="align-content: end" th:href="@{product/{id}(id=${product.id})}">
-                        <button  type="button" class="filter-btn" data-id="breakfast" >
-                            More
-                        </button>
-                    </a>
+                    <a style="display: inline; margin-left: 20px;" class="btn basket" href="#">Add to basket</a>
                 </div>
             </div>
         </article>
@@ -45,9 +38,49 @@
 </section>
 
 
+<footer th:insert="fragments.html :: footer"></footer>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<footer th:insert="fragments.html :: footer">
+<!-- JavaScript to toggle sidebar -->
+<script>
+    document.getElementById('sidebarCollapse').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('active');
+    });
+</script>
 
-</footer>
+<script type="text/javascript">
+    $(document).on("click",".basket",function (){
+        var img = document.getElementById('productImg').getAttribute('src');
+        var price = $('#productPrice').text();;
+        var description = $('#productDescription').text();;
+        var name = $('#productName').text();
+        var calories = $('#productCalories').text();
+        var type = $('#productType').val()
+        console.log(name)
+
+        $.ajax({
+            method: 'POST',
+            url: '/basket/',
+            data: {
+                name: name,
+                description: description,
+                price: price,
+                url: img,
+                calories:calories
+            },
+            success: function (res) {
+                const elements = document.getElementsByClassName("basket");
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].style.display = 'none';
+                }
+                console.log(res);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    })
+</script>
+
 </body>
 </html>
