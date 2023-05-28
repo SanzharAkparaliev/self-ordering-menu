@@ -28,20 +28,25 @@ public class HomeController {
     @Autowired
     private BasketService basketService;
     @GetMapping
-    public String getHomePage(Model model){
+    public String getTestPage( Model model){
         List<ChildCategory> childCategories = childCategoriesService.getAll();
         List<Category> categories = categoryService.findAll();
         List<Product> allProduct = productService.getAllProduct();
-
-
         List<Basket> baskets = basketService.findAll();
+        double sumTotal = 0.0;
+        for (Basket item : baskets) {
+            sumTotal += item.getPrice() * item.getCount();
+        }
+        model.addAttribute("total",sumTotal);
         model.addAttribute("baskets",baskets);
         model.addAttribute("categoryName","Our Menu");
         model.addAttribute("title","Menu");
         model.addAttribute("categories",categories);
         model.addAttribute("products",allProduct);
-        return "index";
+        return "home";
     }
+
+
 
     @GetMapping("/category/{id}")
     public String getChildCategory(@PathVariable("id") Long id, Model model){
@@ -50,6 +55,11 @@ public class HomeController {
         Category category = categoryService.getCategory(id);
         List<Product> products = productService.findByCategory(category);
         List<Basket> baskets = basketService.findAll();
+        double sumTotal = 0.0;
+        for (Basket item : baskets) {
+            sumTotal += item.getPrice() * item.getCount();
+        }
+        model.addAttribute("total",sumTotal);
         model.addAttribute("baskets",baskets);
         model.addAttribute("categories",categories);
         model.addAttribute("childCategories",childCategories);
@@ -57,7 +67,7 @@ public class HomeController {
         model.addAttribute("title",category.getName());
         model.addAttribute("products",products);
         model.addAttribute("categoryId",id);
-        return "index";
+        return "home";
     }
 
     @GetMapping("/category/{cId}/childcategory/{id}")
@@ -69,6 +79,12 @@ public class HomeController {
         ChildCategory childCategory = childCategoriesService.getChildCategory(id);
         List<Product> productByCategory = productService.getProductByCategory(childCategory);
         List<Basket> baskets = basketService.findAll();
+        double sumTotal = 0.0;
+        for (Basket item : baskets) {
+            sumTotal += item.getPrice() * item.getCount();
+        }
+        model.addAttribute("total",sumTotal);
+
         model.addAttribute("baskets",baskets);
         model.addAttribute("childCategories",childCategories);
         model.addAttribute("categoryName",category.getName());
@@ -76,7 +92,7 @@ public class HomeController {
         model.addAttribute("categories",categories);
         model.addAttribute("products",productByCategory);
         model.addAttribute("categoryId",cId);
-        return "index";
+        return "home";
 
     }
 
@@ -87,13 +103,19 @@ public class HomeController {
         Category category = categoryService.getCategory(id);
         List<Product> products = productService.findByCategory(category);
         List<Basket> baskets = basketService.findAll();
+        double sumTotal = 0.0;
+        for (Basket item : baskets) {
+            sumTotal += item.getPrice() * item.getCount();
+        }
+        model.addAttribute("total",sumTotal);
+
         model.addAttribute("baskets",baskets);
         model.addAttribute("categories",categories);
         model.addAttribute("childCategories",childCategories);
         model.addAttribute("categoryName",category.getName());
         model.addAttribute("title",category.getName());
         model.addAttribute("products",products);
-        return "index";
+        return "home";
     }
 
     @GetMapping("/basket")
@@ -105,10 +127,14 @@ public class HomeController {
         for (Basket item : baskets) {
             sumTotal += item.getPrice() * item.getCount();
         }
+        model.addAttribute("total",sumTotal);
+
         model.addAttribute("baskets",baskets);
         model.addAttribute("total",sumTotal);
         return "basket";
     }
+
+
 
 
 

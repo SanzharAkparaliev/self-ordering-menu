@@ -23,6 +23,8 @@
 //                .authorizeHttpRequests((authz) -> authz
 //                        .antMatchers("/admin/**").hasRole("ADMIN")
 //                        .antMatchers("/**").permitAll()
+//                        .antMatchers("/basket/**").permitAll()
+//
 //
 //                )
 //                .formLogin(withDefaults());

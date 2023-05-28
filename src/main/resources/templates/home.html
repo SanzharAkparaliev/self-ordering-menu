@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Basic Page Info -->
+  <meta charset="utf-8" />
+  <title>Self Ordering Menu</title>
+
+  <!-- Site favicon -->
+
+  <!-- Mobile Specific Metas -->
+  <meta  name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" th:href="@{/vendors/styles/core.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/vendors/styles/icon-font.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/vendors/styles/style.css}"/>
+
+
+  <!-- End Google Tag Manager -->
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="menu-icon bi bi-list"></div>
+    <div
+            class="search-toggle-icon bi bi-search"
+            data-toggle="header_search"
+    ></div>
+    <div class="header-search">
+      <h5>Self Ordering Menu</h5>
+    </div>
+  </div>
+
+</div>
+
+<div class="right-sidebar">
+  <div class="sidebar-title">
+    <h3 class="weight-600 font-16 text-blue">
+      Layout Settings
+      <span class="btn-block font-weight-400 font-12"
+      >User Interface Settings</span
+      >
+    </h3>
+    <div class="close-sidebar" data-toggle="right-sidebar-close">
+      <i class="icon-copy ion-close-round"></i>
+    </div>
+  </div>
+
+</div>
+
+<div class="left-side-bar">
+  <div class="brand-logo">
+<!--    <a href="index.html">-->
+<!--     <h6>Categories</h6>-->
+<!--    </a>-->
+    <div class="close-sidebar" data-toggle="left-sidebar-close">
+      <i class="ion-close-round"></i>
+    </div>
+  </div>
+  <div class="menu-block customscroll">
+    <div class="sidebar-menu">
+      <ul id="accordion-menu">
+
+        <li th:each="category, iStat : ${categories}">
+          <a href="#" class="dropdown-toggle no-arrow" th:href="@{/category/{id}(id=${category.id})}">
+							<span class="mtext" th:text="${category.name}">Calendar</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="mobile-menu-overlay"></div>
+
+<div class="main-container">
+  <div class="row">
+    <div class="pd-ltr-20 xs-pd-20-10 col-md-8 col-sm-12">
+      <div  class="min-height-200px" >
+        <div th:style="${childCategories==null ? 'display:none' : 'display:hidden'}" class="page-header">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <nav aria-label="breadcrumb" class="text-center" role="navigation">
+                <a  th:each="category : ${childCategories}" th:href="@{/category/{cid}/childcategory/{id}(cid=${categoryId},id=${category.id})}">
+                  <button type="button" class="btn btn-primary btn-sm">
+                    <span href="#" th:text="${category.name}" style="color: #FFFFFF"></span>
+                  </button>
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="product-wrap">
+          <div class="product-list">
+            <ul class="row">
+              <li class="col-lg-4 col-md-6 col-sm-12 " th:each="product: ${products}">
+                <div class="product-box">
+                  <div class="producct-img">
+                    <img  th:src="${product.url}" alt="" />
+                  </div>
+                  <div class="product-caption product" >
+                    <h4><a href="#" id="productName" th:text="${product.name}">Gufram </a></h4>
+                    <div class="price"><ins id="productPrice"  th:text="${product.price}">$49.5</ins></div>
+                    <a href="#" class="btn btn-outline-primary basket"
+                       id="success-modal"
+                       tabindex="-1"
+                       role="dialog"
+                       aria-labelledby="exampleModalCenterTitle"
+                       aria-hidden="true" >Add to Basket</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="pd-ltr-20 xs-pd-20-10 col-md-4 col-sm-12">
+      <div class="card-box basket mb-30">
+        <div class="container mt-5 p-3 rounded cart ml-0" style="margin-top: 0px;">
+          <div class="row  no-gutters" >
+            <div class="col-md-12 ">
+                <hr>
+                <div th:each="basket: ${baskets}" class="d-flex justify-content-between align-items-center basket-product mt-3 p-2 items rounded">
+                  <h1 id="productId" th:text="${basket.id}" style="display: none"></h1>
+                  <div class="d-flex flex-row">
+                    <div class="ml-2">
+                      <span class="font-weight-bold d-block"   th:text="${basket.name}">Iphone 11 pro</span>
+                      <div class="price"  th:text="${basket.price}"></div>
+                    </div>
+                  </div>
+                  <div class="quantity">
+                    <input type="number" style="max-width: 40px;"  th:value="${basket.count}" min="1" class="quantity-field" id="quantity-input">
+                  </div>
+                  <div class="d-flex flex-row align-items-center">
+
+                    <span class="d-block ml-5 font-weight-bold"  th:text="${basket.total}">$900</span>
+                    <a class="remove-btn">
+                      <i class="fa fa-trash-o ml-3 text-black-50 ">
+                      </i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          <div class="col-md-12 " style="background: blue;padding: 10px;border-radius: 6px;color: #fff;font-weight: bold;" >
+            <div class="payment-info" >
+              <label class="radio"> <input type="radio" name="card" value="payment" checked="">
+                <span><img src="https://img.icons8.com/color/48/000000/mastercard.png" width="30"></span> </label>
+
+              <label class="radio"> <input type="radio" name="card" value="payment"> <span><img src="https://img.icons8.com/officel/48/000000/visa.png" width="30"></span> </label>
+
+              <label class="radio"> <input type="radio" name="card" value="payment"> <span><img src="https://img.icons8.com/ultraviolet/48/000000/amex.png" width="30"></span> </label>
+
+
+              <label class="radio"> <input type="radio" name="card" value="payment"> <span><img src="https://img.icons8.com/officel/48/000000/paypal.png" width="30"></span> </label>
+              <div><label class="credit-card-label">Name on card</label><input type="text" class="form-control credit-inputs" placeholder="Name"></div>
+              <div><label class="credit-card-label">Card number</label><input type="text" class="form-control credit-inputs" placeholder="0000 0000 0000 0000"></div>
+              <div class="row">
+                <div class="col-md-6"><label class="credit-card-label">Date</label><input type="text" class="form-control credit-inputs" placeholder="12/24"></div>
+                <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text" class="form-control credit-inputs" placeholder="342"></div>
+              </div>
+              <hr class="line">
+              <div class="d-flex justify-content-between information"><span>Total</span><span></span></div>
+              <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button">
+                <span  id="basket-total" th:text="${total}"></span><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="container px-0">
+    <div class="row">
+      <div class="col-md-4 mb-30">
+        <div class="card-box pricing-card mt-30 mb-30">
+          <div class="pricing-icon">
+            <img th:src="@{/vendors/images/icon-Cash.png}" alt="">
+          </div>
+          <div class="price-title">
+            Beginner
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-30">
+        <div class="card-box pricing-card mt-30 mb-30">
+          <div class="pricing-icon">
+            <img th:src="@{/vendors/images/icon-debit.png}" alt="">
+          </div>
+          <div class="price-title">
+            Expert
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-30">
+        <div class="card-box pricing-card mt-30 mb-30">
+          <div class="pricing-icon">
+            <img th:src="@{/vendors/images/icon-online-wallet.png}"  alt="">
+          </div>
+          <div class="price-title">
+            experience
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).on("click",".remove-btn",function () {
+    var tr = $(this).closest('.basket-product');
+    var rowData = tr.children('h1').map(function() {
+      return $(this).text();
+    }).get();
+    var id = rowData[0];
+    console.log("id" + id)
+
+    $.ajax({
+      method: 'GET',
+      url: '/basket/delete/' + id,
+      data: {
+      },
+      success: function (res) {
+        location.reload();
+        console.log(res);
+      },
+      error: function (xhr, status, error) {
+        console.log(error);
+      }
+    });
+  })
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".quantity-field").click(function() {
+
+      var tr = $(this).closest('.basket-product');
+      var idRoe = tr.children('h1').map(function() {
+        return $(this).text();
+      }).get();
+
+      var rowData = tr.find('.quantity-field').map(function() {
+        return $(this).val();
+      }).get();
+
+      var count = rowData[0];
+      var id = idRoe[0];
+
+      $.ajax({
+        method: 'GET',
+        url: '/basket/count/' + count +'/product/' + id,
+        data: {
+        },
+        success: function (res) {
+          location.reload();
+
+        },
+        error: function (xhr, status, error) {
+          console.log(error);
+        }
+      });
+    });
+
+
+  });
+</script>
+<<script type="text/javascript">
+  $(document).on("click", ".basket", function () {
+    var $product = $(this).closest('.product');
+    var price = $product.find('#productPrice').text();
+    var name = $product.find('#productName').text();
+    console.log("name " + name);
+
+    $.ajax({
+      method: 'POST',
+      url: '/basket/',
+      data: {
+        name: name,
+        price: price,
+      },
+      success: function (res) {
+        location.reload();
+        const elements = document.getElementsByClassName("basket");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].style.display = 'none';
+        }
+        console.log(res);
+      },
+      error: function (xhr, status, error) {
+        console.log(error);
+      }
+    });
+  });
+</script>
+
+<!-- welcome modal end -->
+<!-- js -->
+<script th:src="@{/vendors/scripts/core.js}"></script>
+<script th:src="@{/vendors/scripts/script.min.js}"></script>
+<script th:src="@{/vendors/scripts/process.js}"></script>
+<script th:src="@{/vendors/scripts/layout-settings.js}"></script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+></iframe
+></noscript>
+
+
+<!-- End Google Tag Manager (noscript) -->
+</body>
+</html>
