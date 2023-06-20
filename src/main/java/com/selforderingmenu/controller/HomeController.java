@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -28,7 +29,7 @@ public class HomeController {
     @Autowired
     private BasketService basketService;
     @GetMapping
-    public String getTestPage( Model model){
+    public String getTestPage(Model model, HttpSession session){
         List<ChildCategory> childCategories = childCategoriesService.getAll();
         List<Category> categories = categoryService.findAll();
         List<Product> allProduct = productService.getAllProduct();
@@ -43,6 +44,10 @@ public class HomeController {
         model.addAttribute("title","Menu");
         model.addAttribute("categories",categories);
         model.addAttribute("products",allProduct);
+
+        session.setAttribute("total",sumTotal);
+        session.setAttribute("baskets",baskets);
+
         return "home";
     }
 

@@ -7,9 +7,11 @@ import com.selforderingmenu.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class BasketService {
     @Autowired
     private BasketRepository basketRepository;
@@ -35,11 +37,13 @@ public class BasketService {
     }
 
     public void saveProductToBasket(Basket basket){
-        Basket byName = basketRepository.findByName(basket.getName());
-        if(byName == null) {
-            basket.setCount(1);
-            basket.setTotal((int) (basket.getCount() * basket.getPrice()));
-            basketRepository.save(basket);
+        if(basket.getPrice() != null) {
+            Basket byName = basketRepository.findByName(basket.getName());
+            if (byName == null) {
+                basket.setCount(1);
+                basket.setTotal((int) (basket.getCount() * basket.getPrice()));
+                basketRepository.save(basket);
+            }
         }
     }
     public Integer changeCount(Long productId,Integer count){

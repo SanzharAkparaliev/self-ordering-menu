@@ -3,9 +3,11 @@ package com.selforderingmenu.controller;
 
 import com.selforderingmenu.entity.Category;
 import com.selforderingmenu.entity.ChildCategory;
+import com.selforderingmenu.entity.OrderSl;
 import com.selforderingmenu.entity.Product;
 import com.selforderingmenu.service.CategoryService;
 import com.selforderingmenu.service.ChildCategoriesService;
+import com.selforderingmenu.service.OrderService;
 import com.selforderingmenu.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping
     public String getAdminPage(Model model){
@@ -122,4 +127,24 @@ public class AdminController {
         productService.saveProduct(product);
         return "redirect:/admin/product";
     }
+
+    @GetMapping("/orders")
+    public String getOrdersPage(Model model){
+        List<OrderSl> orders = orderService.getAll();
+
+        model.addAttribute("orders",orders);
+        return "/admin/orders";
+    }
+
+    @GetMapping("/order/delete/{id}")
+    public String deleteOrder(@PathVariable("id") Long id){
+        orderService.delete(id);
+        return "redirect:/admin/orders";
+    }
+    @GetMapping("/order/status/{id}")
+    public String status(@PathVariable("id") Long id){
+        orderService.status(id);
+        return "redirect:/admin/orders";
+    }
+
 }

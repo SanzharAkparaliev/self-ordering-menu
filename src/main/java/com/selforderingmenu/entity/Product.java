@@ -27,5 +27,8 @@ public class Product extends BaseEntity{
     @ManyToOne
     private ChildCategory childCategory;
 
-
+    @Override
+    public String toString() {
+        return name ;
+    }
 }

@@ -130,7 +130,7 @@
                   <h1 id="productId" th:text="${basket.id}" style="display: none"></h1>
                   <div class="d-flex flex-row">
                     <div class="ml-2">
-                      <span class="font-weight-bold d-block"   th:text="${basket.name}">Iphone 11 pro</span>
+                      <span class="font-weight-bold d-block"  id="product"  th:text="${basket.name}">Iphone 11 pro</span>
                       <div class="price"  th:text="${basket.price}"></div>
                     </div>
                   </div>
@@ -168,7 +168,7 @@
               </div>
               <hr class="line">
               <div class="d-flex justify-content-between information"><span>Total</span><span></span></div>
-              <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button">
+              <button id="basket-check-btn" class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button">
                 <span  id="basket-total" th:text="${total}"></span><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button></div>
           </div>
           </div>
@@ -241,6 +241,25 @@
   })
 </script>
 <script type="text/javascript">
+  $(document).ready(function (){
+    $("#basket-check-btn").click(function (){
+      $.ajax({
+        method: 'GET',
+        url: '/basket/order',
+        data: {
+        },
+        success: function (res) {
+          location.reload();
+        },
+        error: function (xhr, status, error) {
+          console.log(error);
+        }
+      });
+
+    })
+  })
+</script>
+<script type="text/javascript">
   $(document).ready(function() {
     $(".quantity-field").click(function() {
 
@@ -274,7 +293,7 @@
 
   });
 </script>
-<<script type="text/javascript">
+<script type="text/javascript">
   $(document).on("click", ".basket", function () {
     var $product = $(this).closest('.product');
     var price = $product.find('#productPrice').text();
